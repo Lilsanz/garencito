@@ -75,32 +75,44 @@ const DataModule = (() => {
   }
 
   /**
-   * Load data from API or localStorage fallback.
+   * Load data: localStorage first (backward compat), then API/file.
    */
   async function loadFromStorage() {
-    // Try API first
+    // 1) Try localStorage first (user's saved data)
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        currentData = JSON.parse(stored);
+        console.log('DataModule: loaded from localStorage');
+        // Migrate to file if API available (for persistence across deploys)
+        if (await _checkApi()) {
+          const res = await _apiFetch('/api/data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(currentData)
+          });
+          if (res && res.ok) {
+            localStorage.removeItem(STORAGE_KEY);
+            console.log('DataModule: migrated localStorage data to file');
+          }
+        }
+        return cloneData(currentData);
+      }
+    } catch (e) {
+      console.warn('Failed to load from localStorage:', e);
+    }
+    // 2) Try API / file
     const apiRes = await _apiFetch('/api/data');
     if (apiRes && apiRes.ok) {
       currentData = await apiRes.json();
       console.log('DataModule: loaded from file via API');
       return cloneData(currentData);
     }
-    // Fallback to localStorage
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        currentData = JSON.parse(stored);
-        console.log('DataModule: loaded from localStorage (fallback)');
-        return cloneData(currentData);
-      }
-    } catch (e) {
-      console.warn('Failed to load from localStorage:', e);
-    }
     return null;
   }
 
   /**
-   * Initialize data: prefer file/API, fall back to local or defaults.
+   * Initialize data.
    */
   async function init() {
     var loaded = await loadFromStorage();
