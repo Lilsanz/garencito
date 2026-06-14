@@ -1,117 +1,138 @@
 /* =========================================================
    Garencito — Data Module
-   Handles content loading, saving, persistence via
-   localStorage, and JSON import/export.
+   Loads and saves data to the file system via API (when
+   local server is running), with fallback to content.json
+   (static hosting / GitHub Pages).
    ========================================================= */
 
 const DataModule = (() => {
   const STORAGE_KEY = 'garencito_data';
   let currentData = null;
+  let _apiAvailable = null; // cache after first check
+
+  async function _apiFetch(url, opts) {
+    try {
+      const res = await fetch(url, opts);
+      if (res.ok) return res;
+      return null;
+    } catch (_) { return null; }
+  }
+
+  async function _checkApi() {
+    if (_apiAvailable !== null) return _apiAvailable;
+    const res = await _apiFetch('/api/data');
+    _apiAvailable = res !== null && res.ok;
+    return _apiAvailable;
+  }
 
   /**
-   * Load default content from the JSON file.
-   * Falls back to the bundled default if fetch fails.
+   * Load default content from content.json
    */
   async function loadDefaultData() {
     try {
       const res = await fetch('data/content.json');
       if (!res.ok) throw new Error('Failed to load content.json');
       currentData = await res.json();
-      console.log('DataModule: loaded from content.json, gallery:', (currentData.gallery || []).length);
+      console.log('DataModule: loaded from content.json');
       return cloneData(currentData);
     } catch (err) {
       console.warn('DataModule: could not fetch content.json, using embedded defaults:', err);
       currentData = getEmbeddedDefaults();
-      console.log('DataModule: loaded from embedded defaults, gallery:', (currentData.gallery || []).length);
+      console.log('DataModule: loaded from embedded defaults');
       return cloneData(currentData);
     }
   }
 
   /**
-   * Save current data to localStorage.
+   * Save data to file via API, with localStorage fallback.
    */
-  function saveToStorage(data) {
+  async function saveToStorage(data) {
+    const toStore = data || currentData;
+    // Try API (local server writes to data/content.json)
+    if (await _checkApi()) {
+      const res = await _apiFetch('/api/data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(toStore)
+      });
+      if (res && res.ok) {
+        currentData = toStore;
+        console.log('DataModule: saved to file via API');
+        return true;
+      }
+      console.warn('DataModule: API save failed, falling back to localStorage');
+    }
+    // Fallback: localStorage
     try {
-      const toStore = data || currentData;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
       currentData = toStore;
+      console.log('DataModule: saved to localStorage (fallback)');
       return true;
     } catch (err) {
-      console.error('Failed to save to localStorage:', err);
+      console.error('Failed to save:', err);
       return false;
     }
   }
 
   /**
-   * Load data from localStorage, or return null.
+   * Load data from API or localStorage fallback.
    */
-  function loadFromStorage() {
+  async function loadFromStorage() {
+    // Try API first
+    const apiRes = await _apiFetch('/api/data');
+    if (apiRes && apiRes.ok) {
+      currentData = await apiRes.json();
+      console.log('DataModule: loaded from file via API');
+      return cloneData(currentData);
+    }
+    // Fallback to localStorage
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         currentData = JSON.parse(stored);
+        console.log('DataModule: loaded from localStorage (fallback)');
         return cloneData(currentData);
       }
-      return null;
-    } catch (err) {
-      console.warn('Failed to load from localStorage:', err);
-      return null;
+    } catch (e) {
+      console.warn('Failed to load from localStorage:', e);
     }
+    return null;
   }
 
   /**
-   * Check if data exists in localStorage.
-   */
-  function hasStoredData() {
-    return localStorage.getItem(STORAGE_KEY) !== null;
-  }
-
-  /**
-   * Initialize data: prefer localStorage, fall back to defaults.
+   * Initialize data: prefer file/API, fall back to local or defaults.
    */
   async function init() {
-    if (hasStoredData()) {
-      var loaded = loadFromStorage();
-      if (loaded) {
-        currentData = loaded;
-        console.log('DataModule: loaded from localStorage, gallery:', (loaded.gallery || []).length);
-        return cloneData(currentData);
-      }
-      console.warn('DataModule: stored data corrupted, reloading defaults');
-      localStorage.removeItem(STORAGE_KEY);
-    } else {
-      console.log('DataModule: no stored data, loading defaults');
-    }
+    var loaded = await loadFromStorage();
+    if (loaded) return loaded;
+    console.log('DataModule: no stored data, loading defaults');
     return await loadDefaultData();
   }
 
-  /**
-   * Get a clone of the current data.
-   */
   function getData() {
     return cloneData(currentData);
   }
 
   /**
-   * Replace all data (e.g. on import).
+   * Replace all data, persisting to file (or fallback).
    */
-  function setData(data) {
+  async function setData(data) {
     var cloned = cloneData(data);
-    if (saveToStorage(cloned)) {
+    var ok = await saveToStorage(cloned);
+    if (ok) {
       currentData = cloned;
     } else {
-      console.error('setData: failed to persist to localStorage, data not updated');
+      console.error('setData: failed to persist, data not updated');
     }
   }
 
   /**
    * Update specific section of data.
    */
-  function updateSection(section, value) {
+  async function updateSection(section, value) {
     if (!currentData) return false;
     currentData[section] = cloneData(value);
-    saveToStorage(currentData);
-    return true;
+    return await saveToStorage(currentData);
   }
 
   /**
@@ -124,17 +145,16 @@ const DataModule = (() => {
 
   /**
    * Import data from JSON string.
-   * Returns { success: boolean, message: string }
    */
-  function importJSON(jsonStr) {
+  async function importJSON(jsonStr) {
     try {
       const parsed = JSON.parse(jsonStr);
       if (!parsed.name) {
         return { success: false, message: 'El JSON debe contener al menos un nombre (name).' };
       }
       currentData = cloneData(parsed);
-      saveToStorage(currentData);
-      return { success: true, message: 'Datos importados correctamente.' };
+      var ok = await saveToStorage(currentData);
+      return { success: ok, message: ok ? 'Datos importados correctamente.' : 'Error al guardar los datos.' };
     } catch (err) {
       return { success: false, message: 'El archivo no contiene JSON válido.' };
     }
@@ -148,16 +168,9 @@ const DataModule = (() => {
     return await loadDefaultData();
   }
 
-  /**
-   * Deep clone helper.
-   */
   function cloneData(obj) {
     return JSON.parse(JSON.stringify(obj));
   }
-
-  /**
-   * Embedded default data as fallback.
-   */
   function getEmbeddedDefaults() {
     return {
       name: 'Garencito',
