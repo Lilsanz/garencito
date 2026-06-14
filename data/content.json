@@ -1,0 +1,215 @@
+{
+  "name": "Garencito",
+  "nickname": "Garen",
+  "subtitle": "Un alma pequeña con un corazón infinito",
+  "hero_phrase": "Llegó sin hacer ruido y lo llenó todo",
+  "hero_image": "assets/images/hero.svg",
+  "bio_title": "El día que llegó",
+  "bio": "Llegó una tarde de octubre, envuelto en una caja más grande que él. Tenía los ojos aún cerrados y un maullido tan frágil que parecía un susurro. Desde ese momento, algo cambió en la casa. Los rincones antes vacíos de repente tenían sentido. Supe que no era solo un gato: era un guardián de cosas pequeñas pero importantes. El silencio se volvió compañía, las tardes se llenaron de ronroneos, y cada día desde entonces ha sido un poco más luminoso.",
+  "bio_image": "assets/images/gallery/bio.svg",
+  "hero_img_fit": "cover",
+  "hero_img_pos_x": 50,
+  "hero_img_pos_y": 50,
+  "bio_img_fit": "cover",
+  "bio_img_pos_x": 50,
+  "bio_img_pos_y": 50,
+  "essence": {
+    "title": "Su esencia",
+    "description": "Garencito es pura contradicción hermosa: tímido con los extraños, pero dueño absoluto de la casa. Le encanta esconderse en lugares imposibles y aparecer justo cuando más lo necesitas.",
+    "traits": [
+      {
+        "icon": "moon",
+        "title": "Espíritu nocturno",
+        "description": "Cuando el mundo se duerme, él despierta. Recorre la casa como un pequeño fantasma curioso, mirando por las ventanas, vigilando las estrellas."
+      },
+      {
+        "icon": "heart",
+        "title": "Corazón generoso",
+        "description": "No importa el día que hayas tenido, él siempre encuentra la manera de trepar a tu regazo y llenarlo de ronroneos. Su amor no pide nada a cambio."
+      },
+      {
+        "icon": "star",
+        "title": "Explorador nato",
+        "description": "Cada caja es una nave espacial, cada cortina una galaxia, cada rayo de sol un destino por descubrir. Su curiosidad no tiene límites."
+      },
+      {
+        "icon": "feather",
+        "title": "Elegancia innata",
+        "description": "Camina como si el suelo fuera suyo, salta con una gracia que desafía la gravedad y mira con la seguridad de quien sabe que es hermoso."
+      }
+    ],
+    "favorites": {
+      "food": ["Atún fresco", "Pollo desmenuzado", "Croquetas de salmón"],
+      "places": ["La repisa junto a la ventana", "El respaldo del sofá", "Debajo de la cama", "Cualquier caja de cartón"],
+      "activities": ["Mirar pájaros por la ventana", "Dormir sobre el teclado", "Cazar luces con la linterna", "Rodar por el pasto"]
+    }
+  },
+  "moments": [
+    {
+      "id": 1,
+      "type": "image",
+      "title": "La siesta más épica",
+      "description": "Se quedó dormido en una posición tan absurda que parecía líquido. Durante una hora entera no se movió ni un milímetro. Hubo quien dijo que había transcendido.",
+      "image": "assets/images/gallery/moment1.svg"
+    },
+    {
+      "id": 2,
+      "type": "text",
+      "title": "El guardián de la ducha",
+      "description": "Cada vez que alguien se ducha, él se sienta al otro lado de la cortina y monta guardia. Nadie le pidió que lo hiciera. Él simplemente sabe que es su deber."
+    },
+    {
+      "id": 3,
+      "type": "image",
+      "title": "Cacería del punto rojo",
+      "description": "Sabe perfectamente que el puntero láser no es real. Pero finje creerlo, solo para vernos felices. Es su manera de decirnos que nos ama.",
+      "image": "assets/images/gallery/moment3.svg"
+    },
+    {
+      "id": 4,
+      "type": "text",
+      "title": "Ritual matutino",
+      "description": "A las 6:47 exactamente, sin falta, se sienta sobre mi pecho y ronronea hasta que abro los ojos. Es su manera de decir 'buenos días, el mundo sigue aquí y yo también'."
+    },
+    {
+      "id": 5,
+      "type": "image",
+      "title": "El explorador de cajas",
+      "description": "Si hay una caja vacía, él ya está dentro. No importa el tamaño. Una vez se metió en una de zapatos y se quedó orgulloso como si hubiera conquistado un imperio.",
+      "image": "assets/images/gallery/moment5.svg"
+    },
+    {
+      "id": 6,
+      "type": "text",
+      "title": "Maestro del sigilo",
+      "description": "Aparece de la nada. Estás solo en una habitación y al girar, ahí está. No hace ruido. Es un pequeño fantasma de patas suaves y mirada profunda."
+    }
+  ],
+  "memories": [
+    {
+      "id": 1,
+      "text": "La primera vez que ronroneó en mi pecho, supe que había encontrado un hogar. No era yo quien lo había rescatado a él. Era él quien me rescataba a mí."
+    },
+    {
+      "id": 2,
+      "text": "Aquella vez que se perdió por tres horas y apareció dentro de un armario, durmiendo plácidamente entre las sábanas. Como si nada."
+    },
+    {
+      "id": 3,
+      "text": "Cuando llueve fuerte, se esconde bajo la mesa y solo sale si le canto bajito. Dicen que los gatos eligen a quién escuchar. Él me eligió a mí."
+    },
+    {
+      "id": 4,
+      "text": "Su juguete favorito es una bolita de papel. Podría tener los juguetes más caros del mundo, pero prefiere lo simple. Lección aprendida."
+    },
+    {
+      "id": 5,
+      "text": "A medianoche, cuando todo está en silencio, salta a la ventana y mira la luna. No sé qué ve. Pero su cola se mueve como si conversara con ella."
+    }
+  ],
+  "gallery": [
+    {
+      "id": 1,
+      "src": "assets/images/gallery/photo1.svg",
+      "alt": "Garencito mirando por la ventana al atardecer",
+      "title": "Atardecer",
+      "featured": true,
+      "img_fit": "cover",
+      "img_pos_x": 50,
+      "img_pos_y": 50
+    },
+    {
+      "id": 2,
+      "src": "assets/images/gallery/photo2.svg",
+      "alt": "Garencito durmiendo enrollado como una esfera",
+      "title": "Esfera de ternura",
+      "featured": false,
+      "img_fit": "cover",
+      "img_pos_x": 50,
+      "img_pos_y": 50
+    },
+    {
+      "id": 3,
+      "src": "assets/images/gallery/photo3.svg",
+      "alt": "Garencito jugando con un hilo rojo",
+      "title": "Cacería escarlata",
+      "featured": true,
+      "img_fit": "cover",
+      "img_pos_x": 50,
+      "img_pos_y": 50
+    },
+    {
+      "id": 4,
+      "src": "assets/images/gallery/photo4.svg",
+      "alt": "Garencito estirado perezosamente en el sofá",
+      "title": "Pereza dominical",
+      "featured": false,
+      "img_fit": "cover",
+      "img_pos_x": 50,
+      "img_pos_y": 50
+    },
+    {
+      "id": 5,
+      "src": "assets/images/gallery/photo5.svg",
+      "alt": "Garencito entre las hojas del jardín",
+      "title": "Explorador verde",
+      "featured": false,
+      "img_fit": "cover",
+      "img_pos_x": 50,
+      "img_pos_y": 50
+    },
+    {
+      "id": 6,
+      "src": "assets/images/gallery/photo6.svg",
+      "alt": "Garencito con sus ojos grandes mirando fijamente",
+      "title": "Mirada infinita",
+      "featured": true,
+      "img_fit": "cover",
+      "img_pos_x": 50,
+      "img_pos_y": 50
+    },
+    {
+      "id": 7,
+      "src": "assets/images/gallery/photo7.svg",
+      "alt": "Garencito acurrucado en una manta suave",
+      "title": "Sueño de nieve",
+      "featured": false,
+      "img_fit": "cover",
+      "img_pos_x": 50,
+      "img_pos_y": 50
+    },
+    {
+      "id": 8,
+      "src": "assets/images/gallery/photo8.svg",
+      "alt": "Garencito saltando entre muebles",
+      "title": "Vuelo de terciopelo",
+      "featured": false,
+      "img_fit": "cover",
+      "img_pos_x": 50,
+      "img_pos_y": 50
+    }
+  ],
+  "footer": {
+    "signature": "Hecho con ronroneos infinitos",
+    "credit": "Garencito ∞ 2026"
+  },
+  "videos": [
+    {
+      "id": 1,
+      "title": "Primer video",
+      "description": "Un clip especial de Garencito explorando el mundo. Agrega tu video aquí.",
+      "src": "assets/videos/garencito-1.mp4"
+    }
+  ],
+  "settings": {
+    "show_bio": true,
+    "show_essence": true,
+    "show_moments": true,
+    "show_memories": true,
+    "show_gallery": true,
+    "show_videos": true,
+    "primary_color": "#96A78D",
+    "secondary_color": "#B6CEB4",
+    "accent_color": "#D9E9CF"
+  }
+}

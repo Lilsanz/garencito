@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+  <meta name="description" content="Garencito — un pequeño gran ser que llegó sin hacer ruido y lo llenó todo.">
+  <meta name="theme-color" content="#1a1f18">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta property="og:title" content="Garencito — Universo de ternura">
+  <meta property="og:description" content="Un pequeño gran ser que llegó sin hacer ruido y lo llenó todo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..600&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=3">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%2396A78D'>⬡</text></svg>">
+  <title>Garencito — Universo de ternura</title>
+</head>
+<body>
+
+  <!-- ═══ PROGRESS ═══ -->
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- ═══ MOBILE BOTTOM NAV ═══ -->
+  <nav class="nav-mobile" id="navMobile" role="navigation" aria-label="Navegación">
+    <a href="#hero" class="nav-mobile__link is-active" data-section="hero">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M2.5 9.5L10 3l7.5 6.5M4 8v8a1 1 0 001 1h3.5v-5h3V17H15a1 1 0 001-1V8"/></svg>
+      <span>Inicio</span>
+    </a>
+    <a href="#bio" class="nav-mobile__link" data-section="bio">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M10 4.5V17m0-12.5A5.5 5.5 0 004.5 9v3.5H5l1 5h8l1-5h.5V9A5.5 5.5 0 0010 4.5z"/></svg>
+      <span>Historia</span>
+    </a>
+    <a href="#gallery" class="nav-mobile__link" data-section="gallery">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M4 16l4-4 3 3 4-5 3 3V5a1 1 0 00-1-1H5a1 1 0 00-1 1v11zM7 8a1 1 0 100-2 1 1 0 000 2z"/></svg>
+      <span>Galería</span>
+    </a>
+    <a href="#videos" class="nav-mobile__link" data-section="videos">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M3 8l5-4v12l-5-4z"/><path d="M8 8l9-4v12l-9-4z"/></svg>
+      <span>Videos</span>
+    </a>
+    <a href="#pet" class="nav-mobile__link" data-section="pet">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M10 17s-6-4-6-7.5A3.5 3.5 0 0110 6a3.5 3.5 0 016 3.5c0 3.5-6 7.5-6 7.5z"/></svg>
+      <span>Acariciar</span>
+    </a>
+    <a href="#comments" class="nav-mobile__link" data-section="comments">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M3 10a7 7 0 1114 0 7 7 0 01-14 0z"/><path d="M7 9h6M7 12h4"/></svg>
+      <span>Invitados</span>
+    </a>
+  </nav>
+
+  <!-- ═══ DESKTOP NAV ═══ -->
+  <nav class="nav-desktop" id="navDesktop" role="navigation" aria-label="Navegación secundaria">
+    <div class="nav-desktop__inner">
+      <a href="#" class="nav-desktop__logo" aria-label="Inicio">
+        <span class="nav-desktop__mark" aria-hidden="true">⬡</span>
+        <span class="nav-desktop__name" id="navName">Garencito</span>
+      </a>
+      <div class="nav-desktop__links">
+        <a href="#bio" class="nav-desktop__link" data-section="bio">Historia</a>
+        <a href="#gallery" class="nav-desktop__link" data-section="gallery">Galería</a>
+        <a href="#videos" class="nav-desktop__link" data-section="videos">Videos</a>
+        <a href="#pet" class="nav-desktop__link" data-section="pet">Acariciar</a>
+        <a href="#comments" class="nav-desktop__link" data-section="comments">Invitados</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="app-wrapper">
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- HERO                                   -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="hero" class="hero" aria-label="Presentación">
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__morph"></div>
+      <div class="hero__morph hero__morph--2"></div>
+    </div>
+
+    <div class="hero__layout">
+      <div class="hero__text">
+        <div class="hero__overline">Bienvenido a su universo</div>
+        <h1 class="hero__title" id="heroName">Garencito</h1>
+        <p class="hero__subtitle" id="heroSubtitle">Un alma pequeña con un corazón infinito</p>
+        <p class="hero__phrase" id="heroPhrase">Llegó sin hacer ruido y lo llenó todo</p>
+        <div class="hero__action">
+          <a href="#bio" class="btn btn--primary">
+            Conócelo
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__figure">
+        <div class="hero__image-ring">
+          <div class="hero__image-wrap">
+            <img class="hero__image" src="assets/images/hero.svg" alt="" id="heroImage"
+                 onerror="this.style.display='none'">
+          </div>
+        </div>
+        <div class="hero__float hero__float--1" aria-hidden="true">⬡</div>
+        <div class="hero__float hero__float--2" aria-hidden="true">♥</div>
+      </div>
+    </div>
+
+    <div class="hero__scroll" id="heroScroll" aria-hidden="true">
+      <span>Desplázate</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- BIO (Historia)                         -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="bio" class="section bio" aria-label="Historia">
+    <div class="bio__marquee" aria-hidden="true">
+      <span>Garencito &nbsp;·&nbsp; Garencito &nbsp;·&nbsp; Garencito &nbsp;·&nbsp;</span>
+    </div>
+
+    <div class="container">
+      <div class="bio__grid">
+        <div class="bio__text-col">
+          <div class="bio__sticker" data-anim>
+            <span class="section__label">Historia</span>
+            <h2 class="section__title" id="bioTitle">El día que llegó</h2>
+          </div>
+          <div class="bio__body" data-anim id="bioText">
+            <p><span class="bio__dropcap">L</span>legó una tarde de octubre, envuelto en una caja más grande que él. Tenía los ojos aún cerrados y un maullido tan frágil que parecía un susurro.</p>
+            <p>Desde ese momento, algo cambió en la casa. Los rincones antes vacíos de repente tenían sentido. Supe que no era solo un gato: era un guardián de cosas pequeñas pero importantes.</p>
+          </div>
+          <div class="bio__footer" data-anim>
+            <span class="bio__signature">— Con infinito amor</span>
+          </div>
+        </div>
+
+        <div class="bio__media-col">
+          <figure class="bio__figure" data-anim>
+            <div class="bio__image-wrap">
+              <img class="bio__image" src="assets/images/gallery/bio.svg" alt="" id="bioImage" loading="lazy"
+                   onerror="this.parentElement.classList.add('bio__image--empty')">
+            </div>
+            <figcaption class="bio__caption" id="bioTag">Llegó una tarde de octubre</figcaption>
+          </figure>
+
+          <blockquote class="bio__pullquote" data-anim>
+            <p>«No sabía que me faltaba algo hasta que apareció»</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- GALLERY                                -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="gallery" class="section gallery-section" aria-label="Galería">
+    <div class="container">
+      <header class="gallery__header" data-anim>
+        <span class="section__label">Galería</span>
+        <h2 class="section__title">Instantes de luz</h2>
+        <p class="gallery__intro">Fragmentos visuales de su vida, capturados con amor.</p>
+      </header>
+    </div>
+
+    <div class="gallery__grid" id="galleryGrid" role="list" aria-label="Galería de fotos">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- VIDEOS                                 -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="videos" class="section videos" aria-label="Videos">
+    <div class="container">
+      <header class="videos__header" data-anim>
+        <span class="section__label">Videos</span>
+        <h2 class="section__title">Momentos en movimiento</h2>
+        <p class="videos__intro">Pequeños clips llenos de ternura.</p>
+      </header>
+    </div>
+    <div class="videos__grid" id="videosGrid" role="list" aria-label="Videos">
+      <!-- rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- PET (Interactive)                      -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="pet" class="section pet" aria-label="Acariciar">
+    <div class="container">
+      <header class="pet__header" data-anim>
+        <span class="section__label">Interactivo</span>
+        <h2 class="section__title">Acaricia a Garencito</h2>
+        <p class="pet__intro">Toca o haz clic sobre él para darle cariño. Cada caricia se guarda con amor.</p>
+      </header>
+    </div>
+
+    <div class="pet__area" id="petArea" data-anim>
+      <div class="pet__character" id="petCharacter">
+        <span class="pet__face" id="petFace">⬡</span>
+        <div class="pet__reaction" id="petReaction"></div>
+      </div>
+      <div class="pet__info">
+        <div class="pet__counter-wrap">
+          <span class="pet__counter" id="petCounter">0</span>
+          <span class="pet__counter-label">caricias recibidas</span>
+        </div>
+        <p class="pet__message" id="petMessage">Toca para darle amor ♥</p>
+      </div>
+      <div class="pet__floating" id="petFloating" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- COMMENTS                               -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="comments" class="section comments" aria-label="Libro de visitas">
+    <div class="container">
+      <header class="comments__header" data-anim>
+        <span class="section__label">Libro de visitas</span>
+        <h2 class="section__title">Deja tu huella</h2>
+        <p class="comments__intro">Escribe un mensaje lindo para nuestro pequeño Garencito. Tu cariño se queda aquí para siempre.</p>
+      </header>
+
+      <div class="comments__layout">
+        <div class="comments__form-col" data-anim>
+          <form class="comments__form" id="commentForm" novalidate>
+            <div class="comments__form-row">
+              <div class="comments__field">
+                <label class="comments__label" for="commentName">Nombre</label>
+                <input class="comments__input" id="commentName" type="text" required placeholder="Tu nombre" minlength="2" maxlength="50" autocomplete="given-name">
+                <span class="comments__error" id="commentNameError"></span>
+              </div>
+              <div class="comments__field">
+                <label class="comments__label" for="commentLastname">Apellido</label>
+                <input class="comments__input" id="commentLastname" type="text" required placeholder="Tu apellido" minlength="2" maxlength="50" autocomplete="family-name">
+                <span class="comments__error" id="commentLastnameError"></span>
+              </div>
+            </div>
+            <div class="comments__field">
+              <label class="comments__label" for="commentMessage">Mensaje para Garencito</label>
+              <textarea class="comments__textarea" id="commentMessage" required placeholder="Escribe algo bonito..." minlength="5" maxlength="500" rows="3"></textarea>
+              <span class="comments__error" id="commentMessageError"></span>
+              <span class="comments__counter"><span id="commentCounter">0</span>/500</span>
+            </div>
+            <button class="btn btn--primary comments__submit" type="submit">
+              Enviar mensaje
+              <span class="btn__arrow" aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <div class="comments__success" id="commentSuccess" role="alert">
+            <span aria-hidden="true">♥</span>
+            <p>¡Tu mensaje ha sido enviado! Garencito lo guarda con mucho cariño.</p>
+          </div>
+        </div>
+
+        <div class="comments__list-col" data-anim>
+          <div class="comments__list" id="commentsList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- FOOTER                                 -->
+  <!-- ══════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__main">
+          <div class="footer__brand">
+            <span class="footer__mark" aria-hidden="true">⬡</span>
+            <span class="footer__name" id="footerName">Garencito</span>
+          </div>
+
+        </div>
+        <hr class="footer__rule" aria-hidden="true">
+        <div class="footer__end">
+          <p class="footer__signature" id="footerSignature">Hecho con ronroneos infinitos</p>
+          <p class="footer__credit" id="footerCredit">Garencito ∞ 2026</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+  <!-- ═══ VIDEO PLAYER ═══ -->
+  <div class="video-player" id="videoPlayer" role="dialog" aria-modal="true" aria-label="Reproductor de video">
+    <div class="video-player__backdrop"></div>
+    <button class="video-player__close" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="video-player__stage">
+      <video class="video-player__video" id="videoPlayerVideo" controls playsinline preload="auto"></video>
+      <div class="video-player__caption" id="videoPlayerCaption"></div>
+    </div>
+  </div>
+
+  <!-- ═══ LIGHTBOX ═══ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de galería">
+    <div class="lightbox__backdrop"></div>
+    <button class="lightbox__close" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <button class="lightbox__nav lightbox__nav--prev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+    </button>
+    <button class="lightbox__nav lightbox__nav--next" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <div class="lightbox__stage">
+      <img class="lightbox__image" id="lightboxImage" src="" alt="">
+      <div class="lightbox__caption" id="lightboxCaption"></div>
+      <div class="lightbox__counter" id="lightboxCounter"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/comments.js"></script>
+  <script src="js/animations.js?v=3"></script>
+  <script src="js/gallery.js?v=3"></script>
+  <script src="js/main.js?v=3"></script>
+</body>
+</html>

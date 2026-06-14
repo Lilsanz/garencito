@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panel de administración — Garencito">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>">
+  <title>Administrar — Garencito</title>
+</head>
+<body class="admin-body">
+
+  <!-- Ambient Background -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="ambient-bg__orb ambient-bg__orb--1"></div>
+    <div class="ambient-bg__orb ambient-bg__orb--2"></div>
+  </div>
+
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <div class="admin-header__inner">
+      <a href="index.html" class="admin-header__title" style="text-decoration:none;">⬡ Garencito · Admin</a>
+      <div class="admin-header__actions">
+        <button class="admin-header__btn admin-header__btn--secondary" id="adminExport">Exportar JSON</button>
+        <button class="admin-header__btn admin-header__btn--secondary" id="adminImportBtn">Importar JSON</button>
+        <input type="file" id="adminImportFile" accept=".json">
+        <button class="admin-header__btn admin-header__btn--primary" id="adminSaveAll">Guardar todo</button>
+        <a href="index.html" class="admin-header__btn admin-header__btn--secondary" target="_blank">Ver sitio</a>
+        <button class="admin-header__btn admin-header__btn--danger" id="adminReset">Restaurar</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Alert Container -->
+  <div class="container" style="max-width:900px;margin:0 auto;padding:0 var(--space-md);">
+    <div id="adminAlerts"></div>
+  </div>
+
+  <main class="container">
+
+    <!-- Basic Info -->
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Información básica</h2>
+      </div>
+      <div class="admin-form">
+        <div class="admin-form__row">
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="adminName">Nombre</label>
+            <input class="admin-form__input" id="adminName" placeholder="Garencito">
+          </div>
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="adminNickname">Apodo</label>
+            <input class="admin-form__input" id="adminNickname" placeholder="Garen">
+          </div>
+        </div>
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="adminSubtitle">Subtítulo (bajo el nombre en hero)</label>
+          <input class="admin-form__input" id="adminSubtitle" placeholder="Un alma pequeña con un corazón infinito">
+        </div>
+        <div class="admin-form__row">
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="adminPhrase">Frase principal del hero</label>
+            <input class="admin-form__input" id="adminPhrase" placeholder="Llegó sin hacer ruido y lo llenó todo">
+          </div>
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="adminHeroImage">Ruta imagen de hero</label>
+            <div style="display:flex;gap:8px;align-items:stretch;">
+              <input class="admin-form__input" id="adminHeroImage" placeholder="assets/images/hero.jpg" style="flex:1;">
+              <div id="heroFilePicker" class="admin-file-picker" style="flex-shrink:0;"></div>
+            </div>
+            <div id="heroImgAdjuster" class="img-adjuster-wrap"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bio -->
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Biografía</h2>
+      </div>
+      <div class="admin-form">
+        <div class="admin-form__row">
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="adminBioTitle">Título de la biografía</label>
+            <input class="admin-form__input" id="adminBioTitle" placeholder="El día que llegó">
+          </div>
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="adminBioImage">Ruta imagen biográfica</label>
+            <div style="display:flex;gap:8px;align-items:stretch;">
+              <input class="admin-form__input" id="adminBioImage" placeholder="assets/images/gallery/bio.jpg" style="flex:1;">
+              <div id="bioFilePicker" class="admin-file-picker" style="flex-shrink:0;"></div>
+            </div>
+            <div id="bioImgAdjuster" class="img-adjuster-wrap"></div>
+          </div>
+        </div>
+        <div class="admin-form__group">
+          <label class="admin-form__label" for="adminBio">Texto biográfico</label>
+          <textarea class="admin-form__textarea" id="adminBio" rows="5" placeholder="Escribe la historia de Garencito..."></textarea>
+          <span class="admin-form__help">Puedes usar saltos de línea para separar párrafos.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Galería</h2>
+        <button class="admin-header__btn admin-header__btn--secondary" id="adminAddGallery">Añadir foto</button>
+      </div>
+      <div id="adminGalleryList" class="admin-card-list"></div>
+    </section>
+
+    <!-- Videos -->
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Videos</h2>
+        <button class="admin-header__btn admin-header__btn--secondary" id="adminAddVideo">Añadir video</button>
+      </div>
+      <div id="adminVideosList" class="admin-card-list"></div>
+    </section>
+
+    <!-- Pet -->
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Acariciar (Interactivo)</h2>
+      </div>
+      <div class="admin-form">
+        <div class="admin-form__group">
+          <p style="color:var(--c-text-dim);font-size:.875rem;line-height:1.7;">
+            Los visitantes pueden dar caricias tocando al gato en la página principal.
+            El contador se guarda en el navegador de cada visitante.
+          </p>
+        </div>
+        <div class="admin-form__group">
+          <button class="admin-header__btn admin-header__btn--danger" id="adminResetPet">Reiniciar contador local</button>
+          <span class="admin-form__help">Reinicia el contador de caricias de este navegador.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comments -->
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Libro de visitas</h2>
+        <button class="admin-header__btn admin-header__btn--danger" id="adminClearComments">Borrar todos</button>
+      </div>
+      <div id="adminCommentsList" class="admin-card-list"></div>
+    </section>
+
+    <!-- Footer -->
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Footer</h2>
+      </div>
+      <div class="admin-form">
+        <div class="admin-form__row">
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="adminFooterSignature">Firma</label>
+            <input class="admin-form__input" id="adminFooterSignature" placeholder="Hecho con ronroneos infinitos">
+          </div>
+          <div class="admin-form__group">
+            <label class="admin-form__label" for="adminFooterCredit">Crédito</label>
+            <input class="admin-form__input" id="adminFooterCredit" placeholder="Garencito ∞ 2026">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Settings -->
+    <section class="admin-section">
+      <div class="admin-section__header">
+        <h2 class="admin-section__title">Configuración visual</h2>
+      </div>
+
+      <div class="admin-form">
+        <div class="admin-form__row">
+          <div class="admin-form__group">
+            <label class="admin-form__label">Secciones visibles</label>
+            <div class="admin-toggle">
+              <button class="admin-toggle__switch" id="adminShowBio" aria-checked="true" role="switch" aria-label="Mostrar biografía"></button>
+              <span class="admin-toggle__label">Biografía</span>
+            </div>
+            <div class="admin-toggle">
+              <button class="admin-toggle__switch" id="adminShowGallery" aria-checked="true" role="switch" aria-label="Mostrar galería"></button>
+              <span class="admin-toggle__label">Galería</span>
+            </div>
+            <div class="admin-toggle">
+              <button class="admin-toggle__switch" id="adminShowVideos" aria-checked="true" role="switch" aria-label="Mostrar videos"></button>
+              <span class="admin-toggle__label">Videos</span>
+            </div>
+          </div>
+          <div class="admin-form__group">
+            <label class="admin-form__label">Colores personalizados</label>
+            <div class="admin-color-row">
+              <label class="admin-form__label" for="adminColorPrimary">Primario</label>
+               <input type="color" id="adminColorPrimary" value="#96A78D">
+            </div>
+            <div class="admin-color-row" style="margin-top:0.5rem;">
+              <label class="admin-form__label" for="adminColorSecondary">Secundario</label>
+               <input type="color" id="adminColorSecondary" value="#B6CEB4">
+            </div>
+            <div class="admin-color-row" style="margin-top:0.5rem;">
+              <label class="admin-form__label" for="adminColorAccent">Acento</label>
+               <input type="color" id="adminColorAccent" value="#D9E9CF">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal -->
+  <div class="admin-modal" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+    <div class="admin-modal__content">
+      <div class="admin-modal__header">
+        <h3 class="admin-modal__title" id="adminModalTitle">Editar elemento</h3>
+        <button class="admin-modal__close" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="admin-form" id="adminModalForm"></div>
+      <div class="admin-modal__actions">
+        <button class="admin-modal__btn admin-modal__btn--cancel">Cancelar</button>
+        <button class="admin-modal__btn admin-modal__btn--save" id="adminModalSave">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/comments.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
