@@ -1,33 +1,13 @@
 /* =========================================================
    Garencito — Data Module
-   Loads and saves data to the file system via API (when
-   local server is running), with fallback to content.json
-   (static hosting / GitHub Pages).
+   Persists data via localStorage. Falls back to content.json
+   or embedded defaults. Export/Import JSON for file backup.
    ========================================================= */
 
 const DataModule = (() => {
   const STORAGE_KEY = 'garencito_data';
   let currentData = null;
-  let _apiAvailable = null; // cache after first check
 
-  async function _apiFetch(url, opts) {
-    try {
-      const res = await fetch(url, opts);
-      if (res.ok) return res;
-      return null;
-    } catch (_) { return null; }
-  }
-
-  async function _checkApi() {
-    if (_apiAvailable !== null) return _apiAvailable;
-    const res = await _apiFetch('/api/data');
-    _apiAvailable = res !== null && res.ok;
-    return _apiAvailable;
-  }
-
-  /**
-   * Load default content from content.json
-   */
   async function loadDefaultData() {
     try {
       const res = await fetch('data/content.json');
@@ -38,85 +18,40 @@ const DataModule = (() => {
     } catch (err) {
       console.warn('DataModule: could not fetch content.json, using embedded defaults:', err);
       currentData = getEmbeddedDefaults();
-      console.log('DataModule: loaded from embedded defaults');
       return cloneData(currentData);
     }
   }
 
-  /**
-   * Save data to file via API, with localStorage fallback.
-   */
-  async function saveToStorage(data) {
-    const toStore = data || currentData;
-    // Try API (local server writes to data/content.json)
-    if (await _checkApi()) {
-      const res = await _apiFetch('/api/data', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(toStore)
-      });
-      if (res && res.ok) {
-        currentData = toStore;
-        console.log('DataModule: saved to file via API');
-        return true;
-      }
-      console.warn('DataModule: API save failed, falling back to localStorage');
-    }
-    // Fallback: localStorage
+  function saveToStorage(data) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(toStore));
-      currentData = toStore;
-      console.log('DataModule: saved to localStorage (fallback)');
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data || currentData));
+      if (data) currentData = data;
       return true;
     } catch (err) {
-      console.error('Failed to save:', err);
+      console.error('Failed to save to localStorage:', err);
       return false;
     }
   }
 
-  /**
-   * Load data: localStorage first (backward compat), then API/file.
-   */
-  async function loadFromStorage() {
-    // 1) Try localStorage first (user's saved data)
+  function loadFromStorage() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         currentData = JSON.parse(stored);
-        console.log('DataModule: loaded from localStorage');
-        // Migrate to file if API available (for persistence across deploys)
-        if (await _checkApi()) {
-          const res = await _apiFetch('/api/data', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(currentData)
-          });
-          if (res && res.ok) {
-            localStorage.removeItem(STORAGE_KEY);
-            console.log('DataModule: migrated localStorage data to file');
-          }
-        }
         return cloneData(currentData);
       }
     } catch (e) {
       console.warn('Failed to load from localStorage:', e);
     }
-    // 2) Try API / file
-    const apiRes = await _apiFetch('/api/data');
-    if (apiRes && apiRes.ok) {
-      currentData = await apiRes.json();
-      console.log('DataModule: loaded from file via API');
-      return cloneData(currentData);
-    }
     return null;
   }
 
-  /**
-   * Initialize data.
-   */
   async function init() {
-    var loaded = await loadFromStorage();
-    if (loaded) return loaded;
+    const stored = loadFromStorage();
+    if (stored) {
+      console.log('DataModule: loaded from localStorage');
+      return stored;
+    }
     console.log('DataModule: no stored data, loading defaults');
     return await loadDefaultData();
   }
@@ -125,56 +60,41 @@ const DataModule = (() => {
     return cloneData(currentData);
   }
 
-  /**
-   * Replace all data, persisting to file (or fallback).
-   */
-  async function setData(data) {
+  function setData(data) {
     var cloned = cloneData(data);
-    var ok = await saveToStorage(cloned);
-    if (ok) {
+    if (saveToStorage(cloned)) {
       currentData = cloned;
     } else {
       console.error('setData: failed to persist, data not updated');
     }
   }
 
-  /**
-   * Update specific section of data.
-   */
-  async function updateSection(section, value) {
+  function updateSection(section, value) {
     if (!currentData) return false;
     currentData[section] = cloneData(value);
-    return await saveToStorage(currentData);
+    saveToStorage(currentData);
+    return true;
   }
 
-  /**
-   * Export data as JSON string.
-   */
   function exportJSON() {
     if (!currentData) return '{}';
     return JSON.stringify(currentData, null, 2);
   }
 
-  /**
-   * Import data from JSON string.
-   */
-  async function importJSON(jsonStr) {
+  function importJSON(jsonStr) {
     try {
       const parsed = JSON.parse(jsonStr);
       if (!parsed.name) {
         return { success: false, message: 'El JSON debe contener al menos un nombre (name).' };
       }
       currentData = cloneData(parsed);
-      var ok = await saveToStorage(currentData);
-      return { success: ok, message: ok ? 'Datos importados correctamente.' : 'Error al guardar los datos.' };
+      saveToStorage(currentData);
+      return { success: true, message: 'Datos importados correctamente.' };
     } catch (err) {
       return { success: false, message: 'El archivo no contiene JSON válido.' };
     }
   }
 
-  /**
-   * Reset to default data from content.json
-   */
   async function resetData() {
     localStorage.removeItem(STORAGE_KEY);
     return await loadDefaultData();

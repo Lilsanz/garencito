@@ -120,7 +120,7 @@ function attachEventListeners() {
   });
 }
 
-async function saveAll() {
+function saveAll() {
   if (!adminData) return;
 
   const updates = {
@@ -154,7 +154,7 @@ async function saveAll() {
   };
 
   Object.assign(adminData, updates);
-  await DataModule.setData(adminData);
+  DataModule.setData(adminData);
   showAlert('success', 'Todo guardado correctamente.');
 }
 
@@ -592,14 +592,14 @@ function buildVideoForm(item) {
   );
 }
 
-async function saveModalItem() {
+function saveModalItem() {
   const modal = document.getElementById('adminModal');
   const editIndex = modal?.dataset.editIndex;
   const editType = modal?.dataset.editType || 'gallery';
   if (!adminData) return;
 
   if (editType === 'video') {
-    await saveVideoItem(editIndex);
+    saveVideoItem(editIndex);
     return;
   }
 
@@ -621,18 +621,18 @@ async function saveModalItem() {
     adminData.gallery.push(item);
   }
 
-  await DataModule.setData(adminData);
+  DataModule.setData(adminData);
   renderGalleryList(adminData.gallery);
   console.log('Gallery saved, total items:', adminData.gallery.length, 'saved type:', editType);
   showAlert('success', editIndex ? 'Foto actualizada.' : 'Foto añadida.');
   closeModal();
 }
 
-async function deleteGalleryItem(index) {
+function deleteGalleryItem(index) {
   if (!adminData?.gallery) return;
   if (!confirm('¿Eliminar esta foto?')) return;
   adminData.gallery.splice(index, 1);
-  await DataModule.setData(adminData);
+  DataModule.setData(adminData);
   renderGalleryList(adminData.gallery);
   showAlert('info', 'Foto eliminada.');
 }
@@ -677,7 +677,7 @@ function renderVideosList(videos) {
   });
 }
 
-async function saveVideoItem(editIndex) {
+function saveVideoItem(editIndex) {
   var src = getVal('modalVideoSrc');
 
   if (src.indexOf('data:') !== -1 || src.length > 500000) {
@@ -699,17 +699,17 @@ async function saveVideoItem(editIndex) {
     adminData.videos.push(item);
   }
 
-  await DataModule.setData(adminData);
+  DataModule.setData(adminData);
   renderVideosList(adminData.videos);
   showAlert('success', editIndex ? 'Video actualizado.' : 'Video añadido.');
   closeModal();
 }
 
-async function deleteVideoItem(index) {
+function deleteVideoItem(index) {
   if (!adminData?.videos) return;
   if (!confirm('¿Eliminar este video?')) return;
   adminData.videos.splice(index, 1);
-  await DataModule.setData(adminData);
+  DataModule.setData(adminData);
   renderVideosList(adminData.videos);
   showAlert('info', 'Video eliminado.');
 }
@@ -734,8 +734,8 @@ function importData(e) {
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = async (ev) => {
-    const result = await DataModule.importJSON(ev.target.result);
+  reader.onload = (ev) => {
+    const result = DataModule.importJSON(ev.target.result);
     if (result.success) {
       adminData = DataModule.getData();
       renderAdmin();
